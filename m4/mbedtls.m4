@@ -22,25 +22,9 @@ AC_DEFUN([ss_MBEDTLS],
      LDFLAGS="$LDFLAGS -L$withval"]
   )
 
-  AC_CHECK_LIB(mbedcrypto, mbedtls_cipher_setup,
-    [LIBS="-lmbedcrypto $LIBS"],
+  AC_CHECK_LIB(mbedtls, mbedtls_cipher_setup,
+    [LIBS="-lmbedtls $LIBS"],
     [AC_MSG_ERROR([mbed TLS libraries not found.])]
-  )
-
-  AC_MSG_CHECKING([whether mbedtls supports Cipher Feedback mode or not])
-  AC_COMPILE_IFELSE(
-    [AC_LANG_PROGRAM(
-      [[
-#include <mbedtls/config.h>
-      ]],
-      [[
-#ifndef MBEDTLS_CIPHER_MODE_CFB
-#error Cipher Feedback mode a.k.a CFB not supported by your mbed TLS.
-#endif
-      ]]
-    )],
-    [AC_MSG_RESULT([ok])],
-    [AC_MSG_ERROR([MBEDTLS_CIPHER_MODE_CFB required])]
   )
 
 
